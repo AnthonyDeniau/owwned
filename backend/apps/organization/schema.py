@@ -29,27 +29,4 @@ class Query(graphene.ObjectType):
         return None
 
 
-class CreateTeam(graphene.Mutation):
-    id = graphene.Int()
-    name = graphene.String()
-    user = graphene.ID()
-    organization = graphene.Field(OrganizationType)
-
-    class Arguments:
-        name = graphene.String(required=True)
-        organization = graphene.ID()
-        user = graphene.ID()
-
-    def mutate(self, info, name, organization, user):
-        team = Team(name=name, organization_id=organization, user_id=user)
-        team.save()
-        return CreateTeam(id=team.id,
-                          name=team.name,
-                          organization=team.organization)
-
-
-class Mutation(graphene.ObjectType):
-    create_team = CreateTeam.Field()
-
-
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=Query)
