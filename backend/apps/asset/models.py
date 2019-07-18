@@ -1,6 +1,6 @@
 from django.db import models
-from backend.apps.team.models import Team
-from backend.apps.supplier.models import Supplier
+from team.models import Team
+from supplier.models import Supplier
 
 # Create your models here.
 class Asset(models.Model):
