@@ -97,9 +97,14 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
+.idea
+
 # mkdocs documentation
 /site
 
 # mypy
 .mypy_cache/
 .vscode/settings.json
+
+.idea
+.vscode
