@@ -34,12 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth',
     'django.contrib.contenttypes', 'django.contrib.sessions',
-<<<<<<< HEAD
-    'django.contrib.messages', 'django.contrib.staticfiles', 'graphene_django',
-    'organization', 'supplier'
-=======
     'django.contrib.messages', 'django.contrib.staticfiles', 'organization', 'supplier', 'historyevent', 'asset', 'team',
->>>>>>> 44a3b25b020f374fbbf218bb46941d6e6be0891f
 ]
 
 GRAPHENE = {
