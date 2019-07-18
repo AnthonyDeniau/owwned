@@ -43,10 +43,11 @@ INSTALLED_APPS = [
     'historyevent',
     'asset',
     'team',
+    'graphene_django',
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'project.schema.schema',
+    'SCHEMA': 'organization.schema.schema',
 }
 
 MIDDLEWARE = [

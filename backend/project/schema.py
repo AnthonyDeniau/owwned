@@ -1,7 +1,8 @@
 import graphene
+import organization
 
 
-class Query(graphene.ObjectType):
+class Query(organization.schema.Query, graphene.ObjectType):
     pass
 
 
