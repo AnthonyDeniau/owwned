@@ -7,5 +7,5 @@ from backend.apps.team.models import Team
 
 
 class Profiles(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
