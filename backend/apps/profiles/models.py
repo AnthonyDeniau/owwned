@@ -3,7 +3,7 @@ from django.db import models
 
 
 # Create your models here.
-from backend.apps.team.models import Team
+from team.models import Team
 
 
 class Profiles(models.Model):
