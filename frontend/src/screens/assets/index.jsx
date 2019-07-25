@@ -20,19 +20,21 @@ export default class AssetsHomeScreen extends Component {
             <Query query={QUERY_ASSETS}>
               {({ loading, error, data }) => {
                 console.log("loading: ", loading);
+                console.log("data: ", data);
+                console.log("error: ", error);
                 return (
                   loading || (
                     <List
                       itemLayout="horizontal"
-                      dataSource={data.pokemons}
+                      dataSource={data.teams}
                       renderItem={item => (
                         <List.Item>
                           <List.Item.Meta
-                            avatar={<Avatar src={item.image} />}
+                            avatar={<Avatar src={""} />}
                             title={<a href="https://ant.design">{item.name}</a>}
-                            description={item.maxHP + " HP"}
+                            description={item.organization.name}
                           />
-                          <div>{item.classification}</div>
+                          <div>20/03/2017</div>
                         </List.Item>
                       )}
                     />

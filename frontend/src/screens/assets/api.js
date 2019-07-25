@@ -2,11 +2,12 @@ import gql from "graphql-tag";
 
 export const QUERY_ASSETS = gql`
   {
-    pokemons(first: 10) {
+    teams {
+      id
       name
-      maxHP
-      classification
-      image
+      organization {
+        name
+      }
     }
   }
 `;

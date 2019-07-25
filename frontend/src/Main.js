@@ -11,7 +11,7 @@ import "antd/dist/antd.css";
 // const { Header, Footer, Sider, Content } = Layout;
 
 const client = new ApolloClient({
-  uri: "https://graphql-pokemon.now.sh"
+  uri: "http://127.0.0.1:8000/graphql/"
 });
 
 class Main extends Component {
