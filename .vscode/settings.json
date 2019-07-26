@@ -1,4 +1,0 @@
-{
-  "python.pythonPath": "${workspaceFolder}/backend/venv/bin/python",
-  "python.autoComplete.extraPaths": ["${workspaceFolder}/backend/apps"]
-}
