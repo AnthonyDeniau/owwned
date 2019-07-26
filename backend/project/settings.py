@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'asset',
     'team',
     'graphene_django',
+    'documentation'
 ]
 
 GRAPHENE = {
