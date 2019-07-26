@@ -12,9 +12,13 @@ class Query(graphene.ObjectType):
     batiment = graphene.Field(BatimentType, id=graphene.Int())
     batiments = graphene.List(BatimentType)
 
-    def resolve_batiment(self, context, id=None):
-        if id is not None:
+    def resolve_batiment(self, context, id=None, name=None):
+        if (id is not None):
             return Batiment.objects.get(pk=id)
+
+        if (name is not None):
+            return Batiment.objects.get(name=name)
+
         return None
 
     def resolve_batiments(self, context):
@@ -28,9 +32,9 @@ class CreateBatiment(graphene.Mutation):
     latitude = graphene.Float()
 
     class Arguments:
-        name = graphene.String()
-        longitude = graphene.Float()
-        latitude = graphene.Float()
+        name = graphene.String(required=True)
+        longitude = graphene.Float(required=True)
+        latitude = graphene.Float(required=True)
 
     def mutate(self, info, name, longitude, latitude):
         batiment = Batiment(name=name, longitude=longitude, latitude=latitude)
@@ -57,10 +61,13 @@ class UpdateBatiment(graphene.Mutation):
         batiment = Batiment.objects.get(pk=id)
         if (name is not None):
             batiment.name = name
+
         if (longitude is not None):
             batiment.longitude = longitude
+
         if (latitude is not None):
             batiment.latitude = latitude
+
         batiment.save()
         return UpdateBatiment(id=batiment.id,
                               name=batiment.name,
