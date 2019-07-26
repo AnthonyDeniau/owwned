@@ -25,7 +25,8 @@ class Query(graphene.ObjectType):
         return Batiment.objects.all()
 
     def resolve_assetsBatiment(self, context, batimentId):
-        return Asset.objects.filter(Floor.objects.filter())
+        return Asset.objects.filter(Floor_id__in =  Floor.objects.filter(Room_id__in = ))
+        return Asset.objects.filter(reduce(operator.and_, (Q(first_name__contains=x) for x in ['x', 'y', 'z']))
 
 class CreateBatiment(graphene.Mutation):
     id = graphene.Int()
