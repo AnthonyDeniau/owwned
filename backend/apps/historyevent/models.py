@@ -19,4 +19,7 @@ class HistoryEvent(models.Model):
         default='Other',
     )
     description = models.TextField(max_length=500)
+    
+    def __str__(self):
+        return "History asset: " + self.asset.name + " user: " + self.user.username
 

@@ -1,0 +1,128 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$u4jjfJJpU3n4$fNL18P74HWxxtI57A8vlR6dGCpFMs0PXOwbqoUGhpRk=",
+    "last_login": "2019-07-26T08:17:11.128Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2019-07-26T08:16:48.033Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$cawO4KWzUpPy$KgiOS1tFDUMBbLKXSX5ptd1sZTlkKxbYXe/XgwHEKnw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Jean",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-07-26T08:18:31.444Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$5zB86bgnb7gS$TPDJZWr3fNwzfPQZzYozDYhmxFmRS+gZiHtYmmrJWI8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Olivier",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-07-26T08:19:34.027Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$3vuh3Om4nMlj$l+CMxOVW5uKOz2q22BmyLdEcIn2E3nnhXr3+Aa6Apqg=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Hugo",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-07-26T08:20:08.981Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "organization.organization",
+  "pk": 1,
+  "fields": {
+    "name": "Collins Aerospace"
+  }
+},
+{
+  "model": "organization.organization",
+  "pk": 2,
+  "fields": {
+    "name": "Airbus DS"
+  }
+},
+{
+  "model": "supplier.supplier",
+  "pk": 1,
+  "fields": {
+    "name": "LG",
+    "webSite": "",
+    "login": "lg",
+    "password": "12345678Ab"
+  }
+},
+{
+  "model": "asset.asset",
+  "pk": 1,
+  "fields": {
+    "team": 3,
+    "name": "4k Monitor",
+    "description": "A 4k monitor",
+    "picture": "acer-bm320.png",
+    "cost": "600.00",
+    "supplier": 1
+  }
+},
+{
+  "model": "team.team",
+  "pk": 2,
+  "fields": {
+    "name": "Frontend",
+    "user": 3,
+    "organization": 1
+  }
+},
+{
+  "model": "team.team",
+  "pk": 3,
+  "fields": {
+    "name": "Backend",
+    "user": 4,
+    "organization": 2
+  }
+}
+]
