@@ -105,7 +105,7 @@ class Mutation(graphene.ObjectType):
     create_historyevent = CreateHistoryEvent.Field()
     delete_historyevent = DeleteHistoryEvent.Field()
     update_historyevent = UpdateHistoryEvent.Field()
-schema = graphene.Schema(mutation=Mutation)
+schema = graphene.Schema(query=Query, mutation=Mutation)
 
 
 
