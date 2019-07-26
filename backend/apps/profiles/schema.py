@@ -21,4 +21,25 @@ class Query(graphene.ObjectType):
         return Profiles.objects.all()
 
 
-schema = graphene.Schema(query=Query)
+class CreateProfiles(graphene.Mutation):
+    id = graphene.Int()
+    user = graphene.ID()
+    team = graphene.ID()
+
+    class Arguments:
+        user = graphene.ID()
+        team = graphene.ID()
+
+    def mutate(self, info, user, team):
+        profile = Profiles(user_id=user, team_id=team)
+        profile.save()
+        return CreateProfiles(id=profile.id,
+                              user=profile.user,
+                              team=profile.team)
+
+
+class Mutation(graphene.ObjectType):
+    create_profile = CreateProfiles.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
