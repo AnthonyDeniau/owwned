@@ -85,6 +85,7 @@ class UpdateHistoryEvent(graphene.Mutation):
                                     endDate=historyEvent.endDate,
                                     typeEvent=historyEvent.typeEvent,
                                     description=historyEvent.description)
+    #test
 
 
 class DeleteHistoryEvent(graphene.Mutation):
