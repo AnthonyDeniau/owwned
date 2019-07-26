@@ -2,13 +2,15 @@ import graphene
 import organization.schema
 import team.schema
 import documentation.schema
+import profiles.schema
 
 
-class Query(organization.schema.Query, team.schema.Query, documentation.schema.Query, graphene.ObjectType):
+class Query(organization.schema.Query, team.schema.Query,
+            profiles.schema.Query, documentation.schema.Query, graphene.ObjectType):
     pass
 
 
-class Mutation(team.schema.Mutation,documentation.schema.Mutation, graphene.ObjectType):
+class Mutation(team.schema.Mutation, documentation.schema.Mutation, graphene.ObjectType):
     pass
 
 
