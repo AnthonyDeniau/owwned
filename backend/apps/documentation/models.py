@@ -6,7 +6,7 @@ class Documentation(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     url = models.URLField(max_length=255)
-    docfile = models.FileField(upload_to="documentations",max_length=255)
+    docfile = models.FileField(upload_to="",max_length=255)
     
     def str(self):
         return self.name
