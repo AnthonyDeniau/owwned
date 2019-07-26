@@ -37,7 +37,7 @@ class Query(graphene.ObjectType):
             return Supplier.objects.get(pk=id)
     
     def resolve_suppliers(self, context):
-        return Suppliers.objects.all()
+        return Supplier.objects.all()
 
 
 class DeleteSupplier(graphene.Mutation):
