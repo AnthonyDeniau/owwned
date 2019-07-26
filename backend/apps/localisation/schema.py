@@ -1,11 +1,16 @@
 from graphene_django import DjangoObjectType
 import graphene
 from .models import Batiment
+from .models import Room
 
 
 class BatimentType(DjangoObjectType):
     class Meta:
         model = Batiment
+
+class RoomType(DjangoObjectType):
+    class Meta:
+        model = Room        
 
 
 class Query(graphene.ObjectType):

@@ -2,6 +2,7 @@ from graphene_django import DjangoObjectType
 import graphene
 from .models import Asset
 from supplier.schema import SupplierType
+from localisation.schema import RoomType
 
 
 class AssetType(DjangoObjectType):
@@ -31,14 +32,16 @@ class CreateAsset(graphene.Mutation):
     description = graphene.String()
     cost = graphene.Float()
     supplier = graphene.Field(SupplierType)
+    room = graphene.Field(RoomType)
 
     class Arguments: 
         name = graphene.String(required=True)
         description = graphene.String(required=True)
         cost = graphene.Float()
-        supplier =  graphene.ID()
+        supplier = graphene.ID()
+        room = graphene.ID()
     
-    def mutate(self, info, name, description, cost, supplier):
-        asset = Asset(name=name, description=description, cost=cost, supplier_id=supplier)
+    def mutate(self, info, name, description, cost, supplier, room):
+        asset = Asset(name=name, description=description, cost=cost, supplier_id=supplier, room_id=room)
         asset.save()
-        return CreateAsset(id=asset.id, name=asset.name, supplier=asset.supplier) 
+        return CreateAsset(id=asset.id, name=asset.name, supplier=asset.supplier, room=asset.room) 
