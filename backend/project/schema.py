@@ -19,7 +19,8 @@ class Query(organization.schema.Query, team.schema.Query, asset.schema.Query,
 
 class Mutation(supplier.schema.Mutation, team.schema.Mutation,
                documentation.schema.Mutation, historyevent.schema.Mutation,
-               profiles.schema.Mutation, graphene.ObjectType):
+               profiles.schema.Mutation, location.schema.Mutation,
+               graphene.ObjectType):
     pass
 
 
