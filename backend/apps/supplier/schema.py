@@ -42,11 +42,6 @@ class Query(graphene.ObjectType):
 
 class DeleteSupplier(graphene.Mutation):
     status = graphene.Boolean()
-    #id = graphene.Int()
-    #name = graphene.String()
-    #user = graphene.ID()
-    #organization = graphene.Field(OrganizationType)
-
     class Arguments:
         id = graphene.ID(required=True)
 
@@ -58,10 +53,38 @@ class DeleteSupplier(graphene.Mutation):
         )
 
 
+class UpdateSupplier(graphene.Mutation):
+    id = graphene.Int()
+    name = graphene.String()
+    login = graphene.String()
+    password = graphene.String()
+    webSite = graphene.String()
+
+    class Arguments:
+        id = graphene.ID(required = True)
+        name = graphene.String(required=True)
+        login = graphene.String()
+        password = graphene.String()
+        webSite = graphene.String()
+
+    def mutate(self, info, id, name, login, password, webSite):
+        supplier = Supplier.objects.get(pk=id)
+        supplier.name = name
+        supplier.login = login
+        supplier.password = password
+        supplier.webSite = webSite        
+        supplier.save()
+        return UpdateSupplier(id = supplier.id,
+                              name=supplier.name,
+                              login=supplier.login,
+                              password=supplier.password,
+                              webSite=supplier.webSite)
+
 
 class Mutation(graphene.ObjectType):
     create_supplier = CreateSupplier.Field()
     delete_supplier = DeleteSupplier.Field()
+    update_supplier = UpdateSupplier.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
