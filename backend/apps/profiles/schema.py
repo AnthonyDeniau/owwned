@@ -38,8 +38,21 @@ class CreateProfiles(graphene.Mutation):
                               team=profile.team)
 
 
+class DeleteProfiles(graphene.Mutation):
+    is_delete = graphene.Boolean()
+
+    class Arguments:
+        id = graphene.ID()
+
+    def mutate(self, info, id):
+        profile = Profiles.objects.get(pk=id)
+        profile.delete()
+        return DeleteProfiles(is_delete=True)
+
+
 class Mutation(graphene.ObjectType):
     create_profile = CreateProfiles.Field()
+    delete_profile = DeleteProfiles.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
