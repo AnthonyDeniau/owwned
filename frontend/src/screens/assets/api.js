@@ -11,3 +11,13 @@ export const QUERY_ASSETS = gql`
     }
   }
 `;
+
+export const QUERY_ASSET_DETAIL = gql`
+  {
+    asset {
+      name
+      description
+      cost
+    }
+  }
+`;
