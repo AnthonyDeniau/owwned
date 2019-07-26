@@ -45,6 +45,48 @@ class CreateHistoryEvent(graphene.Mutation):
                                     typeEvent=historyEvent.typeEvent,
                                     description=historyEvent.description)
 
+class UpdateHistoryEvent(graphene.Mutation):
+    id = graphene.Int()
+    user = graphene.ID()
+    asset = graphene.ID()
+    startDate = graphene.types.datetime.DateTime()
+    endDate = graphene.types.datetime.DateTime()
+    typeEvent = graphene.String()
+    description = graphene.String()
+
+    class Arguments:
+        id = graphene.Int()
+        user = graphene.ID()
+        asset = graphene.ID()
+        startDate = graphene.types.datetime.DateTime()
+        endDate = graphene.types.datetime.DateTime()
+        typeEvent = graphene.String()
+        description = graphene.String()
+
+    def mutate(self, info, id,user=None , asset=None, startDate=None, endDate=None, typeEvent=None, description=None):
+        historyEvent = HistoryEvent.objects.get(pk=id)
+        if user is not None:
+            historyEvent.user = user
+        if asset is not None:
+            historyEvent.asset = asset 
+        if startDate is not None:
+            historyEvent.startDate = startDate
+        if endDate is not None:
+            historyEvent.endDate = endDate
+        if typeEvent is not None:
+            historyEvent.typeEvent = typeEvent
+        if description is not None:
+            historyEvent.description = description
+
+        historyEvent.save()
+        return UpdateHistoryEvent(user=historyEvent.user,
+                                    asset=historyEvent.asset,
+                                    startDate=historyEvent.startDate,
+                                    endDate=historyEvent.endDate,
+                                    typeEvent=historyEvent.typeEvent,
+                                    description=historyEvent.description)
+
+
 class DeleteHistoryEvent(graphene.Mutation):
     historyEventBool = graphene.Boolean()
 
@@ -57,9 +99,11 @@ class DeleteHistoryEvent(graphene.Mutation):
         return DeleteHistoryEvent(historyEventBool=True)
 
 
+
 class Mutation(graphene.ObjectType):
     create_historyevent = CreateHistoryEvent.Field()
     delete_historyevent = DeleteHistoryEvent.Field()
+    update_historyevent = UpdateHistoryEvent.Field()
 schema = graphene.Schema(mutation=Mutation)
 
 
