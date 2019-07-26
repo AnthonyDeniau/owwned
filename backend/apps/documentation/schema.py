@@ -51,6 +51,41 @@ class CreateDocumentation(graphene.Mutation):
                                     url=documentation.url,
                                     docfile=documentation.docfile)
 
+class UpdateDocumentation(graphene.Mutation):
+    id = graphene.Int()
+    asset = graphene.Field(AssetType)
+    name = graphene.String()
+    description = graphene.String()
+    url = graphene.String()
+    docfile = graphene.String()
+
+    class Arguments:
+        id = graphene.ID()        
+        asset = graphene.ID()
+        name = graphene.String(required=True)
+        description = graphene.String()
+        url = graphene.String()
+        docfile = graphene.String()
+
+    def mutate(self, info, id, asset, name, description, url, docfile):
+        documentation = Documentation.objects.get(pk=id)
+        if (asset):
+            documentation.asset = asset 
+        if (name):
+            documentation.name = name
+        if (description):
+            documentation.description = description
+        if (url):
+            documentation.url = url
+        if (docfile):
+            documentation.docfile = docfile
+        documentation.save()
+        return UpdateDocumentation(asset=documentation.asset,
+                                    name=documentation.name,
+                                    description=documentation.description,
+                                    url=documentation.url,
+                                    docfile=documentation.docfile)
+
 
 class DeleteDocumentation(graphene.Mutation):
     is_delete = graphene.Boolean()
@@ -67,6 +102,7 @@ class DeleteDocumentation(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     create_documentation = CreateDocumentation.Field()
     deleteDocumentation = DeleteDocumentation.Field()
+    updateDocumentation = UpdateDocumentation.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
