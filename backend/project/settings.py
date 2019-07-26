@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'team',
     'profiles',
     'graphene_django',
-    'documentation'
-]
+    'documentation',
+    'location'
+    ]
 
 GRAPHENE = {
     'SCHEMA': 'project.schema.schema',
