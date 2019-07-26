@@ -1,7 +1,7 @@
 from graphene_django import DjangoObjectType
 import graphene
 from .models import Asset
-from organization.schema import OrganizationType
+from supplier.schema import SupplierType
 
 
 class AssetType(DjangoObjectType):
@@ -24,3 +24,21 @@ class Query(graphene.ObjectType):
 
     def resolve_assets(self, context):
         return Asset.objects.all()
+
+class CreateAsset(graphene.Mutation):
+    id = graphene.Int()
+    name = graphene.String()
+    description = graphene.String()
+    cost = graphene.Float()
+    supplier = graphene.Field(SupplierType)
+
+    class Arguments: 
+        name = graphene.String(required=True)
+        description = graphene.String(required=True)
+        cost = graphene.Float()
+        supplier =  graphene.ID()
+    
+    def mutate(self, info, name, description, cost, supplier):
+        asset = Asset(name=name, description=description, cost=cost, supplier_id=supplier)
+        asset.save()
+        return CreateAsset(id=asset.id, name=asset.name, supplier=asset.supplier) 
