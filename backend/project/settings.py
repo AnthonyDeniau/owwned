@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'historyevent',
     'asset',
     'team',
+    'profiles',
     'graphene_django',
+    'documentation'
 ]
 
 GRAPHENE = {
