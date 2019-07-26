@@ -43,10 +43,47 @@ class CreateTeam(graphene.Mutation):
         return CreateTeam(id=team.id,
                           name=team.name,
                           organization=team.organization)
+    
+class DeleteTeam(graphene.Mutation):
+    is_delete = graphene.Boolean()
+
+    class Arguments:
+        id = graphene.ID()
+    
+    def mutate(self,info,id):
+        team = Team.objects.get(pk=id)
+        team.delete()
+        return DeleteTeam(is_delete=True)
+
+
+class UpdateTeam(graphene.Mutation):
+    id = graphene.Int()
+    name = graphene.String()
+    user = graphene.ID()
+    organization = graphene.Field(OrganizationType)
+
+    class Arguments:
+        id = graphene.ID()
+        name = graphene.String()
+        user = graphene.ID()
+        organization = graphene.ID()
+    
+    def mutate(self,info,id,name,user,organization):
+        team = Team.objects.get(pk=id)
+        team.name = name
+        team.user = user
+        team.organization = organization
+        team.save()
+        return UpdateTeam(id,name,user,organization)
+
+
 
 
 class Mutation(graphene.ObjectType):
     create_team = CreateTeam.Field()
+    delete_team = DeleteTeam.Field()
+    update_team = UpdateTeam.Field()
+   
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
