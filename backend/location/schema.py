@@ -29,7 +29,7 @@ class Query(graphene.ObjectType):
 
         return None
 
-    def resolve_teams(self, context):
+    def resolve_batiments(self, context):
         return Batiment.objects.all()
 
 
