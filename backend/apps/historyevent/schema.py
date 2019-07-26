@@ -32,9 +32,6 @@ class CreateHistoryEvent(graphene.Mutation):
                                     typeEvent=historyEvent.typeEvent,
                                     description=historyEvent.description)
 
-
-
-
 class Mutation(graphene.ObjectType):
     create_historyevent = CreateHistoryEvent.Field()
 schema = graphene.Schema(mutation=Mutation)
