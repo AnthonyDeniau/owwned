@@ -26,7 +26,7 @@ class CreateHistoryEvent(graphene.Mutation):
 
     def mutate(self, info, user, asset, startDate, endDate, typeEvent, description):
         historyEvent = HistoryEvent(user_id=user, asset_id=asset, startDate=startDate, endDate=endDate, typeEvent=typeEvent, description=description)
-        HistoryEvent.save()
+        historyEvent.save()
         return CreateHistoryEvent(id=historyEvent.id,
                                     user=historyEvent.user,
                                     asset=historyEvent.asset,
