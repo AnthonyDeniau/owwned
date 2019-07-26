@@ -21,3 +21,5 @@ class Query(graphene.ObjectType):
 
     def resolve_documentations(self, context):
         return Documentation.objects.all()
+
+schema = graphene.Schema(query=Query)
