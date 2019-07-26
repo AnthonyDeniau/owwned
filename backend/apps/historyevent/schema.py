@@ -8,7 +8,7 @@ class HistoryEventType(DjangoObjectType)
         model = HistoryEvent
 
 class CreateHistoryEvent(graphene.Mutation):
-    Id = graphene.Int()
+    id = graphene.Int()
     user = graphene.ID()
     asset = graphene.ID()
     startDate = graphene.types.datetime.DateTime()
