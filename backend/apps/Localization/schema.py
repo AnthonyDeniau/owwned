@@ -1,6 +1,8 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Localization
+from .models import Building
+from .models import Floor
+from .models import Room
 
 class BuildingType(DjangoObjectType):
     class Meta:
@@ -81,5 +83,8 @@ class CreateBuilding(graphene.Mutation):
                             Long=Building.long,
                             name=Building.name)
 
+class Mutation(graphene.ObjectType):
+    createbuilding = CreateBuilding.Field()
 
+schema = graphene.Schema(query=Query, mutation=Mutation)
     
