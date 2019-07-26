@@ -68,7 +68,7 @@ class CreateBuilding(graphene.Mutation):
     id = graphene.Int()
     Lat = graphene.Decimal()
     Long = graphene.Decimal()
-    Name = graphene.String
+    Name = graphene.String()
 
     class Arguments:
         Lat = graphene.Decimal()
@@ -76,12 +76,12 @@ class CreateBuilding(graphene.Mutation):
         Name = graphene.String(required=True)
 
     def mutate(self, info, Lat, Long, Name):
-        Building = Building(Lat=Lat, Long=Long, Name=Name)
-        Building.save()
-        return CreateBuilding(id=Building.id,
-                            Lat=Building.Lat,
-                            Long=Building.Long,
-                            name=Building.Name)
+        building = Building(Lat=Lat, Long=Long, Name=Name)
+        building.save()
+        return CreateBuilding(id=building.id,
+                            Lat=building.Lat,
+                            Long=building.Long,
+                            Name=building.Name)
 
 class Mutation(graphene.ObjectType):
     createbuilding = CreateBuilding.Field()
