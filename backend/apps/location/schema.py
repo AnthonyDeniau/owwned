@@ -23,7 +23,7 @@ class Query(graphene.ObjectType):
         return None
 
     def resolve_batiments(self, context):
-        return Documentation.objects.all()
+        return Batiment.objects.all()
 
 
 class CreateBatiment(graphene.Mutation):
