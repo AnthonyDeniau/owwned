@@ -1,5 +1,4 @@
-from django.apps import AppConfig
+from django.contrib import admin
+from .models import Location
 
-
-class LocationConfig(AppConfig):
-    name = 'Location'
+admin.site.register(Location)

@@ -7,9 +7,9 @@ class Batiment(models.Model):
     Name = models.CharField
 
 class Floor(models.Model):
-    Batiment = models.ForeignKey('Batiment', on_delete=models.CASCADE,)
+    Batiment = models.ForeignKey('Batiment', on_delete=models.CASCADE)
     Name = models.CharField
 
 class Room(models.Model):
-    Floor = models.ForeignKey('Floor', on_delete=models.CASCADE,)
+    Floor = models.ForeignKey('Floor', on_delete=models.CASCADE)
     Name = models.CharField
