@@ -70,7 +70,7 @@ class UpdateDocumentation(graphene.Mutation):
     def mutate(self, info, id, asset=None, name=None, description=None, url=None, docfile=None):
         documentation = Documentation.objects.get(pk=id)
         if asset is not None:
-            documentation.asset = asset 
+            documentation.asset_id = asset 
         if name is not None:
             documentation.name = name
         if description is not None:
