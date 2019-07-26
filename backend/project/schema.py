@@ -3,6 +3,7 @@ import organization.schema
 import team.schema
 import asset.schema
 import documentation.schema
+import profiles.schema
 
 
 class Query(organization.schema.Query, team.schema.Query, asset.schema.Query,
