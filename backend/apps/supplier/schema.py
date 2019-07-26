@@ -28,6 +28,17 @@ class CreateSupplier(graphene.Mutation):
                               password=supplier.password,
                               webSite=supplier.webSite)
 
+class Query(graphene.ObjectType):
+    supplier = graphene.Field(SupplierType, id=graphene.Int())
+    suppliers = graphene.List(SupplierType)
+
+    def resolve_supplier(self, context, id=None):
+        if id is not None:
+            return Supplier.objects.get(pk=id)
+    
+    def resolve_suppliers(self, context):
+        return Suppliers.objects.all()
+
 
 class Mutation(graphene.ObjectType):
     create_supplier = CreateSupplier.Field()
