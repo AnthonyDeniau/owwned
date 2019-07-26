@@ -51,9 +51,9 @@ class UpdateProfiles(graphene.Mutation):
     def mutate(self, info, id, user=None, team=None):
         profile = Profiles.objects.get(pk=id)
         if (user is not None):
-            profile.user = user
+            profile.user_id = user
         if (team is not None):
-            profile.team = team
+            profile.team_id = team
         profile.save()
         return UpdateProfiles(id=profile.id,
                               user=profile.user,
