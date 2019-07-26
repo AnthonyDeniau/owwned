@@ -40,8 +40,28 @@ class Query(graphene.ObjectType):
         return Suppliers.objects.all()
 
 
+class DeleteSupplier(graphene.Mutation):
+    status = graphene.Boolean()
+    #id = graphene.Int()
+    #name = graphene.String()
+    #user = graphene.ID()
+    #organization = graphene.Field(OrganizationType)
+
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    def mutate(self, info, id):
+        supplier = Supplier.objects.get(pk=id)
+        supplier.delete()
+        return DeleteSupplier(
+            status=True
+        )
+
+
+
 class Mutation(graphene.ObjectType):
     create_supplier = CreateSupplier.Field()
+    delete_supplier = DeleteSupplier.Field()
 
 
-schema = graphene.Schema(mutation=Mutation)
+schema = graphene.Schema(query=Query, mutation=Mutation)
