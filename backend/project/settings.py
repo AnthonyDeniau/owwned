@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'supplier',
     'historyevent',
     'asset',
+    'location',
     'team',
     'profiles',
     'graphene_django',
