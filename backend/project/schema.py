@@ -5,6 +5,7 @@ import asset.schema
 import documentation.schema
 import profiles.schema
 import supplier.schema
+import historyevent.schema
 
 
 class Query(organization.schema.Query, team.schema.Query, asset.schema.Query,
@@ -12,7 +13,7 @@ class Query(organization.schema.Query, team.schema.Query, asset.schema.Query,
     pass
 
 
-class Mutation(supplier.schema.Mutation,team.schema.Mutation, documentation.schema.Mutation, graphene.ObjectType):
+class Mutation(supplier.schema.Mutation,team.schema.Mutation, documentation.schema.Mutation, historyevent.schema.Mutation, graphene.ObjectType):
     pass
 
 
