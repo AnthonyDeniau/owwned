@@ -4,7 +4,7 @@ import team.schema
 import documentation.schema
 
 
-class Query(organization.schema.Query, documentation.schema.Query, team.schema.Query, graphene.ObjectType):
+class Query(organization.schema.Query, documentation.schema.Query, team.schema.Query, profiles.schem.Query, graphene.ObjectType):
     pass
 
 
