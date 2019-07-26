@@ -1,21 +1,24 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Batitment, Floor, Room
+from .models import Batiment
 
 
-class BatiementType(DjangoObjectType):
+class BatimentType(DjangoObjectType):
     class Meta:
-        model = Batitment
+        model = Batiment
 
 
 class Query(graphene.ObjectType):
-    batiement = graphene.Field(BatiementType, id=graphene.Int())
-    batiement = graphene.List(BatiementType)
+    batiment = graphene.Field(BatimentType, id=graphene.Int())
+    batiments = graphene.List(BatimentType)
 
-    def resolve_batiement(self, context, id=None):
+    def resolve_batiment(self, context, id=None):
         if id is not None:
-            return batiement.objects.get(pk=id)
+            return Batiment.objects.get(pk=id)
         return None
 
-    def resolve_batiement(self, context):
-        return batiement.objects.all()
+    def resolve_batiments(self, context):
+        return Batiment.objects.all()
+
+
+schema = graphene.Schema(query=Query)
