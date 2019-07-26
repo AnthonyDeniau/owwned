@@ -1,6 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Building
+from .models import Building, Floor, Room
 
 
 class BuildingType(DjangoObjectType):
@@ -9,11 +9,16 @@ class BuildingType(DjangoObjectType):
 
 
 class CreateBuilding(graphene.Mutation):
-    id = graphene.Int()
-    long = graphene.String()
-    lat = graphene.String()
+    name = graphene.String()
+    long = graphene.Decimal()
+    lat = graphene.Decimal()
 
-    def mutate(self, name, long, lat):
+    class Arguments:
+        name = graphene.String()
+        long = graphene.Decimal()
+        lat = graphene.Decimal()
+
+    def mutate(self, info, name, long, lat):
         building = Building(name=name, lat=lat, long=long)
         building.save()
         return CreateBuilding(name=building.name,
