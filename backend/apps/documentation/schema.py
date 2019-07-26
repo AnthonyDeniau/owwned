@@ -60,24 +60,24 @@ class UpdateDocumentation(graphene.Mutation):
     docfile = graphene.String()
 
     class Arguments:
-        id = graphene.ID()        
+        id = graphene.Int()        
         asset = graphene.ID()
-        name = graphene.String(required=True)
+        name = graphene.String()
         description = graphene.String()
         url = graphene.String()
         docfile = graphene.String()
 
-    def mutate(self, info, id, asset, name, description, url, docfile):
+    def mutate(self, info, id, asset=None, name=None, description=None, url=None, docfile=None):
         documentation = Documentation.objects.get(pk=id)
-        if (asset):
+        if asset is not None:
             documentation.asset = asset 
-        if (name):
+        if name is not None:
             documentation.name = name
-        if (description):
+        if description is not None:
             documentation.description = description
-        if (url):
+        if url is not None:
             documentation.url = url
-        if (docfile):
+        if docfile is not None:
             documentation.docfile = docfile
         documentation.save()
         return UpdateDocumentation(asset=documentation.asset,
