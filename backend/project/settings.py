@@ -40,11 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'organization',
-    # 'supplier',
+    'supplier',
     'historyevent',
     'asset',
     'team',
     'graphene_django',
+    'documentation'
 ]
 
 GRAPHENE = {
