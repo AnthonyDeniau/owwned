@@ -9,7 +9,7 @@ import historyevent.schema
 
 
 class Query(organization.schema.Query, team.schema.Query, asset.schema.Query,
-            profiles.schema.Query, documentation.schema.Query, graphene.ObjectType):
+            profiles.schema.Query, documentation.schema.Query, historyevent.schema.Query, graphene.ObjectType):
     pass
 
 class Mutation(supplier.schema.Mutation,team.schema.Mutation, documentation.schema.Mutation, historyevent.schema.Mutation, profiles.schema.Mutation, graphene.ObjectType):

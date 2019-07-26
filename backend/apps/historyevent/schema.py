@@ -7,6 +7,18 @@ class HistoryEventType(DjangoObjectType):
     class Meta:
         model = HistoryEvent
 
+class Query(graphene.ObjectType):
+    historyEvent = graphene.Field(HistoryEventType, id=graphene.Int())
+    historyEvents = graphene.List(HistoryEventType)
+    def resolve_historyEvent(self, context, id=None):
+        if id is not None:
+            return HistoryEvent.objects.get(pk=id)
+
+        return None
+
+    def resolve_historyEvents(self, context):
+        return HistoryEvent.objects.all()
+
 class CreateHistoryEvent(graphene.Mutation):
     id = graphene.Int()
     user = graphene.ID()
