@@ -8,7 +8,7 @@ class Query(organization.schema.Query, documentation.schema.Query, team.schema.Q
     pass
 
 
-class Mutation(team.schema.Mutation, graphene.ObjectType):
+class Mutation(team.schema.Mutation, documentation.schema.Mutation, graphene.ObjectType):
     pass
 
 

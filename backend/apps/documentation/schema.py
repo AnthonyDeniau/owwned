@@ -1,6 +1,30 @@
 from graphene_django import DjangoObjectType
 import graphene
 from .models import Documentation
+from asset.schema import AssetType
+
+
+class DocumentationType(DjangoObjectType):
+    class Meta:
+        model = Documentation
+
+
+class Query(graphene.ObjectType):
+    documentation = graphene.Field(DocumentationType, id=graphene.Int(), name=graphene.String())
+    documentations = graphene.List(DocumentationType)
+
+    def resolve_documentation(self, context, id=None, name=None):
+        if id is not None:
+            return Documentation.objects.get(pk=id)
+
+        if name is not None:
+            return Documentation.objects.get(name=name)
+
+        return None
+
+    def resolve_documentations(self, context):
+        return Documentation.objects.all()
+
 
 class CreateDocumentation(graphene.Mutation):
     id = graphene.Int()
@@ -28,27 +52,21 @@ class CreateDocumentation(graphene.Mutation):
                                     docfile=documentation.docfile)
 
 
+class DeleteDocumentation(graphene.Mutation):
+    is_delete = graphene.Boolean()
+
+    class Arguments:
+        id = graphene.ID()
+
+    def mutate(self, info, id):
+        documentation = Documentation.objects.get(pk=id)
+        documentation.delete()
+        return DeleteDocumentation(is_delete=True)
+
+
 class Mutation(graphene.ObjectType):
     create_documentation = CreateDocumentation.Field()
+    deleteDocumentation = DeleteDocumentation.Field()
 
-class DocumentationType(DjangoObjectType):
-    class Meta:
-        model = Documentation
 
-class Query(graphene.ObjectType):
-    documentation = graphene.Field(DocumentationType, id=graphene.Int(), name=graphene.String())
-    documentations = graphene.List(DocumentationType)
-
-    def resolve_documentation(self, context, id=None, name=None):
-        if id is not None:
-            return Documentation.objects.get(pk=id)
-
-        if name is not None:
-            return Documentation.objects.get(name=name)
-
-        return None
-
-    def resolve_documentations(self, context):
-        return Documentation.objects.all()
-
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)
