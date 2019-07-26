@@ -32,8 +32,21 @@ class CreateHistoryEvent(graphene.Mutation):
                                     typeEvent=historyEvent.typeEvent,
                                     description=historyEvent.description)
 
+class DeleteHistoryEvent(graphene.Mutation):
+    historyEventBool = graphene.Boolean()
+
+    class Arguments:
+        historyEventId = graphene.ID(required=True)
+
+    def mutate(self, info, historyEventId):
+        historyEvent = HistoryEvent.objects.get(pk=historyEventId)
+        historyEvent.delete()
+        return DeleteHistoryEvent(historyEventBool=True)
+
+
 class Mutation(graphene.ObjectType):
     create_historyevent = CreateHistoryEvent.Field()
+    delete_historyevent = DeleteHistoryEvent.Field()
 schema = graphene.Schema(mutation=Mutation)
 
 
