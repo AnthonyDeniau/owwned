@@ -7,6 +7,18 @@ class HistoryEventType(DjangoObjectType):
     class Meta:
         model = HistoryEvent
 
+class Query(graphene.ObjectType):
+    historyEvent = graphene.Field(HistoryEventType, id=graphene.Int())
+    historyEvents = graphene.List(HistoryEventType)
+    def resolve_historyEvent(self, context, id=None):
+        if id is not None:
+            return HistoryEvent.objects.get(pk=id)
+
+        return None
+
+    def resolve_historyEvents(self, context):
+        return HistoryEvent.objects.all()
+
 class CreateHistoryEvent(graphene.Mutation):
     id = graphene.Int()
     user = graphene.ID()
@@ -33,8 +45,21 @@ class CreateHistoryEvent(graphene.Mutation):
                                     typeEvent=historyEvent.typeEvent,
                                     description=historyEvent.description)
 
+class DeleteHistoryEvent(graphene.Mutation):
+    historyEventBool = graphene.Boolean()
+
+    class Arguments:
+        historyEventId = graphene.ID(required=True)
+
+    def mutate(self, info, historyEventId):
+        historyEvent = HistoryEvent.objects.get(pk=historyEventId)
+        historyEvent.delete()
+        return DeleteHistoryEvent(historyEventBool=True)
+
+
 class Mutation(graphene.ObjectType):
     create_historyevent = CreateHistoryEvent.Field()
+    delete_historyevent = DeleteHistoryEvent.Field()
 schema = graphene.Schema(mutation=Mutation)
 
 

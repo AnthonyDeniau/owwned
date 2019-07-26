@@ -14,7 +14,7 @@ export const QUERY_ASSETS = gql`
 
 export const QUERY_ASSET_DETAIL = gql`
   {
-    asset {
+    asset(id: 1) {
       name
       description
       cost
