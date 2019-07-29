@@ -1,15 +1,18 @@
 from django.db import models
 
+
 # Create your models here.
 class Batiment(models.Model):
-    Lat = models.DecimalField
-    Long = models.DecimalField
-    Name = models.CharField
+    lat = models.DecimalField
+    long = models.DecimalField
+    name = models.CharField
+
 
 class Floor(models.Model):
-    Batiment = models.ForeignKey('Batiment', on_delete=models.CASCADE)
-    Name = models.CharField
+    batiment = models.ForeignKey(Batiment, on_delete=models.CASCADE)
+    name = models.CharField
+
 
 class Room(models.Model):
-    Floor = models.ForeignKey('Floor', on_delete=models.CASCADE)
-    Name = models.CharField
+    floor = models.ForeignKey(Floor, on_delete=models.CASCADE)
+    name = models.CharField
