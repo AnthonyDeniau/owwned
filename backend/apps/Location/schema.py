@@ -9,41 +9,57 @@ class BatimentType(DjangoObjectType):
         model = Batiment
 
 
+class FloorType(DjangoObjectType):
+    class Meta:
+        model = Floor
+
+
+class RoomType(DjangoObjectType):
+    class Meta:
+        model = Room
+
+
 class Query(graphene.ObjectType):
-    Batiment = graphene.Field(BatimentType, id=graphene.Int(), name=graphene.String())
-    Batiment = graphene.List(BatimentType)
+    batiment = graphene.Field(BatimentType,
+                              id=graphene.Int(),
+                              name=graphene.String())
+    batiments = graphene.List(BatimentType)
 
     def resolve_batiment(self, context, id=None, name=None):
         if id is not None:
-            return batiment.objects.get(pk=id)
+            return Batiment.objects.get(pk=id)
 
         if name is not None:
-            return batiment.objects.get(name=name)
+            return Batiment.objects.get(name=name)
 
         return None
 
     def resolve_batiments(self, context):
-        return batiment.objects.all()
+        return Batiment.objects.all()
 
 
 class Createbatiment(graphene.Mutation):
-    latitude = graphene.Int()
-    longitude = graphene.Int()
+    id = graphene.ID()
+    latitude = graphene.Float()
+    longitude = graphene.Float()
     name = graphene.String()
-    
 
-    class Arguments:        
-        latitude = graphene.Int()
-        longitude = graphene.Int()
+    class Arguments:
+        latitude = graphene.Float()
+        longitude = graphene.Float()
         name = graphene.String()
-    
 
-    def mutate(self, latitude, longitude, name):
-        batiment = batiment(latitude = latitude, longitude = longitude, name = name)
+    def mutate(self, info, latitude, longitude, name):
+        batiment = Batiment(latitude=latitude, longitude=longitude, name=name)
         batiment.save()
-        return Createbatiment(latitude = batiment.latitude, longitude = batiment.longitude, name = batiment.name)
+        return Createbatiment(id=batiment.pk,
+                              latitude=batiment.latitude,
+                              longitude=batiment.longitude,
+                              name=batiment.name)
+
 
 class Mutation(graphene.ObjectType):
-    Createbatiment = Createbatiment.Field()
+    createBatiment = Createbatiment.Field()
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
