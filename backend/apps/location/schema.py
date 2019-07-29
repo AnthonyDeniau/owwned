@@ -1,22 +1,27 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Batiment,Floor,Room
+from .models import Batiment, Floor, Room
 
 
 class BatimentType(DjangoObjectType):
     class Meta:
         model = Batiment
 
+
 class FloorType(DjangoObjectType):
     class Meta:
         model = Floor
+
 
 class RoomType(DjangoObjectType):
     class Meta:
         model = Room
 
+
 class Query(graphene.ObjectType):
-    batiment = graphene.Field(BatimentType, id=graphene.Int(), name=graphene.String())
+    batiment = graphene.Field(BatimentType,
+                              id=graphene.Int(),
+                              name=graphene.String())
     batiments = graphene.List(BatimentType)
 
     def resolve_batiment(self, context, id=None, name=None):
@@ -38,7 +43,7 @@ class CreateBatiment(graphene.Mutation):
     lon = graphene.Float()
     name = graphene.String()
 
-    class Arguments:        
+    class Arguments:
         lat = graphene.Float()
         lon = graphene.Float()
         name = graphene.String()
@@ -46,7 +51,8 @@ class CreateBatiment(graphene.Mutation):
     def mutate(self, info, lat, lon, name):
         batiment = Batiment(lat=lat, lon=lon, name=name)
         batiment.save()
-        return CreateBatiment(lat=lat,lon=lon,name=name)
+        return CreateBatiment(id=batiment.pk, lat=lat, lon=lon, name=name)
+
 
 class UpdateBatiment(graphene.Mutation):
     id = graphene.Int()
@@ -60,17 +66,18 @@ class UpdateBatiment(graphene.Mutation):
         lon = graphene.Float()
         name = graphene.String()
 
-
     def mutate(self, info, id, lat, lon, name):
         batiment = Batiment.objects.get(pk=id)
         if lat is not None:
-            batiment.lat = lat 
+            batiment.lat = lat
         if lon is not None:
             batiment.lon = lon
         if name is not None:
             batiment.name = name
         batiment.save()
-        return UpdateBatiment(lat=batiment.lat, lon=batiment.lon, name=batiment.name)
+        return UpdateBatiment(lat=batiment.lat,
+                              lon=batiment.lon,
+                              name=batiment.name)
 
 
 class DeleteBatiment(graphene.Mutation):
