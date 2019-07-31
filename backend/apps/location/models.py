@@ -8,12 +8,21 @@ class Batiment(models.Model):
     long = models.DecimalField(decimal_places=3, max_digits=19)
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 
 class Floor(models.Model):
     batiment = models.ForeignKey(Batiment, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 
 class Room(models.Model):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name

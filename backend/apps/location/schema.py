@@ -1,6 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Batiment
+from .models import Batiment, Floor, Room
 
 
 class BatimentType(DjangoObjectType):
@@ -8,41 +8,57 @@ class BatimentType(DjangoObjectType):
         model = Batiment
 
 
+class FloorType(DjangoObjectType):
+    class Meta:
+        model = Floor
+
+
+class RoomType(DjangoObjectType):
+    class Meta:
+        model = Room
+
+
 class Query(graphene.ObjectType):
-    batiment = graphene.Field(BatimentType, id=graphene.Int(), name=graphene.String, lat=graphene.Int(),
-                              long=graphene.Int())
+    batiment = graphene.Field(BatimentType,
+                              id=graphene.Int(),
+                              name=graphene.String(),
+                              lat=graphene.Float(),
+                              long=graphene.Float())
     batiments = graphene.List(BatimentType)
 
-    def resolve_organizations(self, context):
+    def resolve_batiments(self, context):
         return Batiment.objects.all()
 
-    def resolve_batiment(self, context, id=None, name=None, lat=None, long=None):
+    def resolve_batiment(self,
+                         context,
+                         id=None,
+                         name=None,
+                         lat=None,
+                         long=None):
         if id is not None:
             return Batiment.objects.get(pk=id)
         if name is not None:
             return Batiment.objects.get(name=name)
-        if lat is not None:
-            return Batiment.objects.get(name=lat)
-        if long is not None:
-            return Batiment.objects.get(name=long)
 
         return None
 
 
 class CreateBatiment(graphene.Mutation):
-    lat = graphene.Int()
-    long = graphene.Int()
+    id = graphene.ID()
+    lat = graphene.Float()
+    long = graphene.Float()
     name = graphene.String()
 
     class Arguments:
-        lat = graphene.Int()
-        long = graphene.Int()
+        lat = graphene.Float()
+        long = graphene.Float()
         name = graphene.String()
 
     def mutate(self, info, lat, long, name):
         batiment = Batiment(lat=lat, long=long, name=name)
         batiment.save()
-        return CreateBatiment(lat=batiment.lat,
+        return CreateBatiment(id=batiment.pk,
+                              lat=batiment.lat,
                               long=batiment.long,
                               name=batiment.name)
 
@@ -51,4 +67,4 @@ class Mutation(graphene.ObjectType):
     create_batiment = CreateBatiment.Field()
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+# schema = graphene.Schema(query=Query)
