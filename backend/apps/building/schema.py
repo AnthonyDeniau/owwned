@@ -8,7 +8,18 @@ class BuildingType(DjangoObjectType):
         model = Building
 
 
+class FloorType(DjangoObjectType):
+    class Meta:
+        model = Floor
+
+
+class RoomType(DjangoObjectType):
+    class Meta:
+        model = Room
+
+
 class CreateBuilding(graphene.Mutation):
+    id = graphene.ID()
     name = graphene.String()
     long = graphene.Decimal()
     lat = graphene.Decimal()
@@ -21,7 +32,8 @@ class CreateBuilding(graphene.Mutation):
     def mutate(self, info, name, long, lat):
         building = Building(name=name, lat=lat, long=long)
         building.save()
-        return CreateBuilding(name=building.name,
+        return CreateBuilding(id=building.pk,
+                              name=building.name,
                               long=building.lat,
                               lat=building.long)
 
@@ -35,9 +47,7 @@ class DeleteBuilding(graphene.Mutation):
     def mutate(self, info, id):
         building = Building.objects.get(pk=id)
         building.delete()
-        return DeleteBuilding(
-            status=True
-        )
+        return DeleteBuilding(status=True)
 
 
 class UpdateBuilding(graphene.Mutation):
@@ -46,15 +56,19 @@ class UpdateBuilding(graphene.Mutation):
     lat = graphene.Decimal()
 
     class Arguments:
+        id = graphene.ID()
         name = graphene.String()
         long = graphene.Decimal()
         lat = graphene.Decimal()
 
-    def mutate(self, info, name, long, lat):
+    def mutate(self, info, id, name=None, long=None, lat=None):
         building = Building.objects.get(pk=id)
-        building.name = name
-        building.lat = lat
-        building.long = long
+        if lat is not None:
+            building.name = name
+        if lat is not None:
+            building.lat = lat
+        if long is not None:
+            building.long = long
 
         building.save()
         return UpdateBuilding(name=building.name,
@@ -63,14 +77,14 @@ class UpdateBuilding(graphene.Mutation):
 
 
 class Query(graphene.ObjectType):
-    building = graphene.Field(CreateBuilding, id=graphene.Int())
-    buildings = graphene.List(CreateBuilding)
+    building = graphene.Field(BuildingType, id=graphene.Int())
+    buildings = graphene.List(BuildingType)
 
     def resolve_building(self, context, id=None):
         if id is not None:
             return Building.objects.get(pk=id)
 
-    def resolve_building(self, context):
+    def resolve_buildings(self, context):
         return Building.objects.all()
 
 
