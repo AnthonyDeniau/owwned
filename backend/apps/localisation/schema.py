@@ -1,20 +1,27 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Batiment
-from .models import Room
+from .models import Batiment, Floor, Room
 
 
 class BatimentType(DjangoObjectType):
     class Meta:
         model = Batiment
 
+
+class FloorType(DjangoObjectType):
+    class Meta:
+        model = Floor
+
+
 class RoomType(DjangoObjectType):
     class Meta:
-        model = Room        
+        model = Room
 
 
 class Query(graphene.ObjectType):
-    batiment = graphene.Field(BatimentType, id=graphene.Int(), name=graphene.String())
+    batiment = graphene.Field(BatimentType,
+                              id=graphene.Int(),
+                              name=graphene.String())
     batiments = graphene.List(BatimentType)
 
     def resolve_batiment(self, context, id=None, name=None):
@@ -36,20 +43,18 @@ class CreateBatiment(graphene.Mutation):
     lat = graphene.Decimal()
     long = graphene.Decimal()
 
-    class Arguments:        
+    class Arguments:
         name = graphene.String(required=True)
         lat = graphene.Decimal(required=True)
         long = graphene.Decimal(required=True)
-    
+
     def mutate(self, info, name, lat, long):
         batiment = Batiment(name=name, lat=lat, long=long)
         batiment.save()
-        return CreateBatiment(
-            id=batiment.id,
-            name=batiment.name,
-            lat=batiment.lat,
-            long=batiment.long
-        )
+        return CreateBatiment(id=batiment.id,
+                              name=batiment.name,
+                              lat=batiment.lat,
+                              long=batiment.long)
 
 
 class DeleteBatiment(graphene.Mutation):
