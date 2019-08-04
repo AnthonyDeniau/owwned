@@ -34,15 +34,16 @@ class CreateBatiment(graphene.Mutation):
     def mutate(self, info, long, lat, name):
         batiment = Batiment(long=long, lat=lat, name=name)
         batiment.save()
-        return CreateBatiment(
-            id=batiment.id,
-            long=batiment.long,
-            lat=batiment.lat,
-            name=batiment.name)
+        return CreateBatiment(id=batiment.id,
+                              long=batiment.long,
+                              lat=batiment.lat,
+                              name=batiment.name)
 
 
 class QueryBatiment(graphene.ObjectType):
-    batiment = graphene.Field(BatimentType, id=graphene.Int(), name=graphene.String())
+    batiment = graphene.Field(BatimentType,
+                              id=graphene.Int(),
+                              name=graphene.String())
     batiments = graphene.List(BatimentType)
 
     def resolve_batiment(self, context, id=None, name=None):
@@ -66,9 +67,9 @@ class UpdateBatiment(graphene.Mutation):
 
     class Arguments:
         id = graphene.Int(required=True)
-        long = graphene.Decimal(required=True)
-        lat = graphene.Decimal(required=True)
-        name = graphene.String(required=True)
+        long = graphene.Decimal(required=False)
+        lat = graphene.Decimal(required=False)
+        name = graphene.String(required=False)
 
     def mutate(self, info, id, long=None, lat=None, name=None):
         batiment = Batiment.objects.get(pk=id)

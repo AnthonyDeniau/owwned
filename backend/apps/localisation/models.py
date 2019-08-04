@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Batiment(models.Model):
-    lat = models.DecimalField(decimal_places=2, max_digits=19)
-    long = models.DecimalField(decimal_places=2, max_digits=19)
+    lat = models.DecimalField(decimal_places=4, max_digits=19)
+    long = models.DecimalField(decimal_places=4, max_digits=19)
     name = models.CharField(max_length=255)
 
     def __str__(self):
