@@ -1,6 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Building
+from .models import Building, Floor, Room
 
 
 class BuildingType(DjangoObjectType):
@@ -8,8 +8,20 @@ class BuildingType(DjangoObjectType):
         model = Building
 
 
+class FloorType(DjangoObjectType):
+    class Meta:
+        model = Floor
+
+
+class RoomType(DjangoObjectType):
+    class Meta:
+        model = Room
+
+
 class Query(graphene.ObjectType):
-    building = graphene.Field(BuildingType, id=graphene.Int(), name=graphene.String())
+    building = graphene.Field(BuildingType,
+                              id=graphene.Int(),
+                              name=graphene.String())
     buildings = graphene.List(BuildingType)
 
     def resolve_building(self, context, id=None, name=None):
@@ -39,7 +51,9 @@ class CreateBuilding(graphene.Mutation):
     def mutate(self, info, name, latitude, longitude):
         building = Building(name=name, latitude=latitude, longitude=longitude)
         building.save()
-        return CreateBuilding(id=building.id, name=building.name, latitude=building.latitude,
+        return CreateBuilding(id=building.id,
+                              name=building.name,
+                              latitude=building.latitude,
                               longitude=building.longitude)
 
 
