@@ -3,8 +3,8 @@ from django.db import models
 
 class Batiment(models.Model):
     name = models.CharField(max_length=50)
-    longitude = models.DecimalField(decimal_places=3, max_digits=19)
-    latitude = models.DecimalField(decimal_places=3, max_digits=19)
+    longitude = models.DecimalField(decimal_places=4, max_digits=19)
+    latitude = models.DecimalField(decimal_places=4, max_digits=19)
 
     def __str__(self):
         return self.name
