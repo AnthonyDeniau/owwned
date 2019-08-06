@@ -1,10 +1,11 @@
 from django.db import models
 
+
 class Batiment(models.Model):
     #lat
-    lat = models.DecimalField(decimal_places=2, max_digits=19)
+    lat = models.DecimalField(decimal_places=4, max_digits=19)
     #long
-    lng = models.DecimalField(decimal_places=2, max_digits=19) 
+    lng = models.DecimalField(decimal_places=4, max_digits=19)
     #name
     name = models.CharField(max_length=255)
 
@@ -19,7 +20,8 @@ class Floor(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
-            return self.name
+        return self.name
+
 
 class Room(models.Model):
     #Batiment
