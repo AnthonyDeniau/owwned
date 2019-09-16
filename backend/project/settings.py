@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'team',
     'profiles',
     'graphene_django',
+    'location',
     'documentation'
 ]
 
